@@ -1,4 +1,4 @@
-import { NodeVM, NodeVMOptions, VMScript } from "vm2";
+import { NodeVM, NodeVMOptions } from "vm2";
 import { Callback } from "../../../../typings/callbacks";
 import { Logger } from "../../../../typings/logger";
 
@@ -71,16 +71,15 @@ class VM {
     code = instructions.join(";");
 
     return `module.exports = (${awaiting ? "async" : ""} () => {${code};})()`;
-
   }
 
   /**
    * Evaluate a snippet of code in the VM.
    * @param {String} code Code to evaluate.
    * @param {Boolean} tolerateError If true, errors are logged to the logger (appears in the console).
-   * @param {Callback<Error, any>} cb Callback function that is called on error or completion of evaluation.
+   * @param {Callback<any>} cb Callback function that is called on error or completion of evaluation.
    */
-  public async doEval(code: string, tolerateError = false, cb: Callback<Error, any>) {
+  public async doEval(code: string, tolerateError = false, cb: Callback<any>) {
     code = VM.formatCode(code);
 
     let result: any;
